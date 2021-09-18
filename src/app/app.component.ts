@@ -1,9 +1,6 @@
 import {Component, OnInit} from '@angular/core';
-import {IAppState} from './core/store/state/app.state';
-import {Store} from '@ngrx/store';
 import {PostService} from './core';
 import {take} from 'rxjs/operators';
-import {getPostsList} from './core/store/actions/posts.action';
 
 @Component({
   selector: 'app-root',
@@ -13,8 +10,8 @@ import {getPostsList} from './core/store/actions/posts.action';
 export class AppComponent implements OnInit {
   title = 'osaja-posts';
 
-  constructor(private store: Store<IAppState>,
-              private postService: PostService) {
+  constructor(
+    private postService: PostService) {
   }
 
 
@@ -26,7 +23,7 @@ export class AppComponent implements OnInit {
     this.postService.getPosts()
       .pipe(take(1))
       .subscribe(res => {
-        this.store.dispatch(getPostsList(res));
+        this.postService.setPostList(res);
       });
   }
 }

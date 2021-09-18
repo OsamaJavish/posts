@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core';
 import {ApiService} from './api.service';
-import {Observable} from 'rxjs';
+import {BehaviorSubject, Observable} from 'rxjs';
 import {Post} from '../models';
 
 @Injectable()
@@ -8,9 +8,18 @@ export class PostService {
 
   prefix = 'posts';
 
+
+  private postListSubject = new BehaviorSubject<Post[]>([]);
+  public postList = this.postListSubject.asObservable().pipe();
+
   constructor(private apiService: ApiService) {
   }
 
+
+
+  setPostList(posts: Post[]): void {
+    this.postListSubject.next(posts);
+  }
 
   getPosts(): Observable<Post[]> {
     return this.apiService.get(`${this.prefix}`);
