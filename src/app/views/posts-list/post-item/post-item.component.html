@@ -1,0 +1,11 @@
+<div class="post-card d-flex align-items-center justify-content-center " (click)="isShowId = !isShowId"
+     [ngbTooltip]="isShowId ? 'Post Id' : 'User Id'">
+
+  <h1 class="id" *ngIf="isShowId; else showUserId" [@inAnimation]>
+    {{post.id}}</h1>
+
+  <ng-template #showUserId placement="top" ngbTooltip="Tooltip on top">
+    <h1 class="id" [@inAnimation]>{{post.userId}}</h1>
+  </ng-template>
+
+</div>
